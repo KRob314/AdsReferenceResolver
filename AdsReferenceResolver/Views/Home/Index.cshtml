@@ -19,10 +19,9 @@
 <input type="button" id="btnSubmit" value="Submit" class="btn btn-primary margin-top-20"/> <br />
 
 
-
 <div class="row margin-top-20">
     <div class="col-md-12">
-        <div class="panel panel-success">
+        <div class="panel panel-success hide">
             <div class="panel-heading">Resolved References</div>
             <div class="panel-body" id="pnlResolved">
             </div>
@@ -32,7 +31,7 @@
 
 <div class="row margin-top-20">
     <div class="col-md-12">
-        <div class="panel panel-warning">
+        <div class="panel panel-warning hide">
             <div class="panel-heading">Unresolved References</div>
             <div class="panel-body" id="pnlUnresolved">               
             </div>
@@ -40,7 +39,13 @@
     </div>
 </div>
 
+<label class="hide" id="lblError"></label>
 
+<div class="row hide" id="loading">
+    <div class="col-md-12">
+        <img src="~/Images/Loading_icon.gif" alt="Loading" class="img-responsive" />
+    </div>
+</div>
 
 
 <script src="~/Scripts/bibReference.js"></script>

@@ -42,11 +42,13 @@
           }
       }
 
+
 document.getElementById('btnSubmit').onclick = function ()
 {
     var myInput = document.getElementById('txtCitations');
     var myResult = document.getElementById('lblResult');
     var citations = splitCitation(myInput);
+    $("#loading").removeClass("hide");
 
     for (var i = 0; i < citations.length; i++)
     {
@@ -55,6 +57,9 @@ document.getElementById('btnSubmit').onclick = function ()
             getReference(citations[i]);
         }
     }
+
+    $("#loading").addClass("hide");
+    $(".panel").removeClass("hide");
 }
 
 function getReference(citation)
@@ -64,15 +69,16 @@ function getReference(citation)
     $.ajax({
         url: url,
         data: encodeURIComponent(citation),
-        success: displayResult
+        success: displayResult,
+        error: displayError
     });
 }
 
 function displayResult(data)
 {
     BibliographicReference.Init(data);
-    var result = BibliographicReference.bibCode + " | " + BibliographicReference.confidence + " | " + BibliographicReference.reference  + "\n";
-
+    var result = BibliographicReference.bibCode + " | " + BibliographicReference.confidence + " | " + BibliographicReference.reference + "\n";
+  
     if (BibliographicReference.resolved === true)
         document.getElementById("pnlResolved").innerText += result;
     else
@@ -83,4 +89,43 @@ function splitCitation(myInput)
 {
     var splitCite = myInput.value.split('\n');
     return splitCite;
+}
+
+function displayError(e, x, settings, exception)
+{
+    $("#lblError").removeClass("hide");
+    $(".panel").addClass("hide");
+
+    var message;
+    var statusErrorMap = {
+        '400': "Server understood the request, but request content was invalid.",
+        '401': "Unauthorized access.",
+        '403': "Forbidden resource can't be accessed.",
+        '500': "Internal server error.",
+        '503': "Service unavailable."
+    };
+
+    if (x.status)
+    {
+        message = statusErrorMap[x.status];
+        if (!message)
+        {
+            message = "Sorry, something went wrong. \n";
+        }
+    } else if (exception == 'parsererror')
+    {
+        message = "Error. Parsing JSON Request failed.\n";
+    } else if (exception == 'timeout')
+    {
+        message = "Request Time out.\n";
+    } else if (exception == 'abort')
+    {
+        message = "Request was aborted by the server.\n";
+    } else
+    {
+        message = "Sorry, something went wrong. \n";
+    }
+  
+    $("#lblError").text(message);
+
 }
