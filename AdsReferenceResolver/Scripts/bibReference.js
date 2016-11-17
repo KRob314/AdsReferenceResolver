@@ -59,7 +59,7 @@ document.getElementById('btnSubmit').onclick = function ()
 
 function getReference(citation)
 {
-    var url = "http://localhost:60865/api/adsreference?citation=" + encodeURIComponent(citation);
+    var url = "/api/adsreference?citation=" + encodeURIComponent(citation);
 
     $.ajax({
         url: url,
@@ -71,7 +71,7 @@ function getReference(citation)
 function displayResult(data)
 {
     BibliographicReference.Init(data);
-    var result = BibliographicReference.bibCode + " | " + BibliographicReference.confidence + " | " + BibliographicReference.reference + " | " + BibliographicReference.resolved + "\n";
+    var result = BibliographicReference.bibCode + " | " + BibliographicReference.confidence + " | " + BibliographicReference.reference  + "\n";
 
     if (BibliographicReference.resolved === true)
         document.getElementById("pnlResolved").innerText += result;
