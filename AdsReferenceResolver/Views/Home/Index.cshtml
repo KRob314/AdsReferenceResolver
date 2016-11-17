@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <textarea id="txtCitations" >
+        Mook, D., Kurtz, M., Weed, J. & Johns, M. 1978, IAUC, 3251, 2
+        Kurtz, M. J. 1982, Bulletin d'Information du Centre de Donnees Stellaires,  23, 13
+        Kurtz, M. J. 1982, Ph.D. Thesis, 2
+        Kurtz, M. J. 1983, Statistical Methods in Astronomy, 47
+        </textarea>
+    </div>
+</div>
+
+<input type="button" id="btnSubmit" value="Submit" class="btn btn-primary margin-top-20"/> <br />
+
+
+
+<div class="row margin-top-20">
+    <div class="col-md-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">Resolved References</div>
+            <div class="panel-body" id="pnlResolved">
+            </div>
+        </div>
+    </div>
+    </div>
+
+<div class="row margin-top-20">
+    <div class="col-md-12">
+        <div class="panel panel-warning">
+            <div class="panel-heading">Unresolved References</div>
+            <div class="panel-body" id="pnlUnresolved">               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/Scripts/bibReference.js"></script>

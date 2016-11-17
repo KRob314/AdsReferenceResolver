@@ -1,0 +1,8 @@
+﻿body { padding-top: 50px; padding-bottom: 20px; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content { padding-left: 15px; padding-right: 15px; }
+
+textarea { width: 600px; height:150px; padding: 3px; border: 1px solid #ccc; }
+
+.margin-top-20 {margin-top:20px; }
