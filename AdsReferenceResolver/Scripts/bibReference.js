@@ -1,4 +1,6 @@
-﻿var BibliographicReference =
+﻿
+
+var BibliographicReference =
       {
           resultString: "",
           bibCode: "",
@@ -8,10 +10,23 @@
 
           Init: function (result)
           {
-              BibliographicReference.resultString = result;
-              BibliographicReference.bibCode = result.substr(0, 19);
+              BibliographicReference.resultString = this.CleanResponse(result);
+              BibliographicReference.bibCode = this.resultString.substr(0, 19);
               BibliographicReference.confidence = this.GetConfidence();
               BibliographicReference.reference = this.GetReference();
+          },
+
+          CleanResponse: function(result)
+          {
+              var tags = ["<head><title>Resolved references</title></head>", "<UL>", "</UL>", "<li>", "</li>", "<body>", "</body>"];
+              var cleanResult = result;
+
+              for (var i = 0; i < tags.length; i++)
+              {
+                  cleanResult = cleanResult.replace(tags[i], "");
+              }
+            
+              return cleanResult.trim();
           },
 
           GetBibCode: function ()
@@ -64,19 +79,23 @@ document.getElementById('btnSubmit').onclick = function ()
 
 function getReference(citation)
 {
-    var url = "/api/adsreference?citation=" + encodeURIComponent(citation);
+    var url = "http://adsres.cfa.harvard.edu/cgi-bin/refcgi.py?resolvethose=" + encodeURIComponent(citation);
 
     $.ajax({
         url: url,
         data: encodeURIComponent(citation),
+        dataType: 'text',
         success: displayResult,
-        error: displayError
+        error: displayError,
+        crossDomain: true
     });
 }
 
 function displayResult(data)
 {
+
     BibliographicReference.Init(data);
+
     var result = BibliographicReference.bibCode + " | " + BibliographicReference.confidence + " | " + BibliographicReference.reference + "\n";
   
     if (BibliographicReference.resolved === true)
